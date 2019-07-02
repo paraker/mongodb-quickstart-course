@@ -1,13 +1,10 @@
-import datetime
-import mongoengine
+class Owner:
+	registered_date = None
+	name = None
+	email = None
 
-class Owner(mongoengine.Document):
-	registered_date = mongoengine.DateTimeField(default=datetime.datetime.now)
-	name = mongoengine.StringField(required=True)
-	email = mongoengine.StringField(required=True)
-
-	snake_ids = mongoengine.ListField()
-	cage_ids = mongoengine.ListField()
+	snake_ids = list()
+	cage_ids = list()
 	
 	meta = {
 		'db_alias': 'core',  # Telling mongodb that this entry goes into the core db
