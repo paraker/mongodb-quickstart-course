@@ -17,3 +17,4 @@ class Cage(mongoengine.Document):  # Sets this class to have a basetype of mongo
 		'db_alias': 'core',  # Telling mongodb that this entry goes into the core db
 		'collection': 'cages'  # Telling mongodb that this goes to the 'snakes' collection (table?)
 	}
+	
