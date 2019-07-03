@@ -50,33 +50,56 @@ def show_commands():
 def create_account():
     print(' ****************** REGISTER **************** ')
     name = input('What is your name?')
-    email = input('What is your email?')
+    email = input('What is your email?').strip().lower()
 
     old_account = svc.find_account_by_email(email)
     if old_account:
         error_msg(f'ERROR: the account with email {email} already exists.')
         return
-    state.active_account = svc.create_account(name, email)
-
+    state.active_account = svc.create_account(name, email)  # State.active_account is a variable from the
+    # infrastructure folder.
+    # active_account starts as None but is set here to the return value from the data_service module
+    success_msg(f'Created new accounts with id {state.active_account.id}')
 
 def log_into_account():
     print(' ****************** LOGIN **************** ')
 
-    # TODO: Get email
-    # TODO: Find account in DB, set as logged in.
+    email = input('What is your email?').strip().lower()
+    account = svc.find_account_by_email(email)
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    if not account:
+        error_msg(f'could not find account with email {email}')
+        return
+
+    state.active_account = account
+    success_msg('logged in successfully')
+
 
 
 def register_cage():
     print(' ****************** REGISTER CAGE **************** ')
 
-    # TODO: Require an account
-    # TODO: Get info about cage
-    # TODO: Save cage to DB.
+    if not state.active_account:
+        error_msg('you ust log in to register a cage')
 
-    print(" -------- NOT IMPLEMENTED -------- ")
+    metres = input('How many square metres is the cage?')
+    if not metres:
+        error_msg('cancelled')
+        return
 
+    metres =float(metres)
+    carpeted = input('carpeted? y/n').lower().startswith('y')
+    has_toys = input('snake toys? y/n').lower().startswith('y')
+    allow_dangerous = input('tolerates venomous snakes? y/n').lower().startswith('y')
+    name = input('give your cage a name')
+
+    svc.register_cage(
+        state.active_account,
+        name, allow_dangerous,
+        has_toys, carpeted, metres
+    )
+
+    state.reload_account()
 
 def list_cages(supress_header=False):
     if not supress_header:

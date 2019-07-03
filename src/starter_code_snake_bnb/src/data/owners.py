@@ -12,5 +12,5 @@ class Owner(mongoengine.Document):
 
     meta = {
         'db_alias': 'core',  # Telling mongodb that this entry goes into the core db
-        'collection': 'owners'  # Telling mongodb that this goes to the 'snakes' collection (table?)
+        'collection': 'owners'  # Telling mongodb that this goes to the 'owners' collection (table?)
     }
