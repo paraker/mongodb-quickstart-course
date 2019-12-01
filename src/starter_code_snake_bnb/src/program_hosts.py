@@ -1,7 +1,7 @@
 from colorama import Fore
-from infrastructure.switchlang import switch
-import infrastructure.state as state
-import services.data_service as svc
+from src.starter_code_snake_bnb.src.infrastructure.switchlang import switch
+import src.starter_code_snake_bnb.src.infrastructure.state as state
+import src.starter_code_snake_bnb.src.services.data_service as svc
 
 
 def run():
@@ -61,6 +61,7 @@ def create_account():
     # active_account starts as None but is set here to the return value from the data_service module
     success_msg(f'Created new accounts with id {state.active_account.id}')
 
+
 def log_into_account():
     print(' ****************** LOGIN **************** ')
 
@@ -75,7 +76,6 @@ def log_into_account():
     success_msg('logged in successfully')
 
 
-
 def register_cage():
     print(' ****************** REGISTER CAGE **************** ')
 
@@ -87,7 +87,7 @@ def register_cage():
         error_msg('cancelled')
         return
 
-    metres =float(metres)
+    metres = float(metres)
     carpeted = input('carpeted? y/n').lower().startswith('y')
     has_toys = input('snake toys? y/n').lower().startswith('y')
     allow_dangerous = input('tolerates venomous snakes? y/n').lower().startswith('y')
@@ -100,9 +100,11 @@ def register_cage():
     )
 
     state.reload_account()
+    success_msg(f'Register new cage with id {cage.id}')
 
-def list_cages(supress_header=False):
-    if not supress_header:
+
+def list_cages(suppress_header=False):
+    if not suppress_header:
         print(' ******************     Your cages     **************** ')
 
     # TODO: Require an account
